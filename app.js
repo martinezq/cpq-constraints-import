@@ -122,7 +122,7 @@ async function uploadExcel() {
             }
         `;
 
-        const backendUrl = `http://localhost:4000/promo/${baseUrl.replace(/(^\w+:|^)\/\//, '')}/${ticketName}`;
+        const backendUrl = `https://cpq-graphql-server.herokuapp.com/promo/${baseUrl.replace(/(^\w+:|^)\/\//, '')}/${ticketName}`;
 
         document.getElementById('spinner').style.display = 'block';
         document.getElementById('constraints-section').style.display = 'none';
