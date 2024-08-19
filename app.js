@@ -4,6 +4,9 @@ let username = '';
 let password = '';
 let selectedFile = null;
 
+const backendGraphQlUrl = `https://cpq-graphql-server.herokuapp.com/promo`;
+// const backendGraphQlUrl = `http://localhost:4000/promo`;
+
 document.addEventListener('DOMContentLoaded', () => {
     // Load stored values if they exist
     if (localStorage.getItem('baseUrl')) {
@@ -36,7 +39,7 @@ function login() {
 }
 
 async function fetchConstraints() {
-    const backendUrl = `https://cpq-graphql-server.herokuapp.com/promo/${baseUrl.replace(/(^\w+:|^)\/\//, '')}/${ticketName}`;
+    const backendUrl = `${backendGraphQlUrl}/${baseUrl.replace(/(^\w+:|^)\/\//, '')}/${ticketName}`;
     
     const query = `
         query {
@@ -122,7 +125,7 @@ async function uploadExcel() {
             }
         `;
 
-        const backendUrl = `https://cpq-graphql-server.herokuapp.com/promo/${baseUrl.replace(/(^\w+:|^)\/\//, '')}/${ticketName}`;
+        const backendUrl = `${backendGraphQlUrl}/${baseUrl.replace(/(^\w+:|^)\/\//, '')}/${ticketName}`;
 
         document.getElementById('spinner').style.display = 'block';
         document.getElementById('constraints-section').style.display = 'none';
