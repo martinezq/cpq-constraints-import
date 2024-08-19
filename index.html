@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tacton Constraints Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        #login-form, #constraints-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 80%;
+        }
+
+        #login-form {
+            max-width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #spinner {
+            display: none;
+            margin: 20px auto;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .button-banner {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tacton Constraints Manager</h1>
+    <div class="error-message" id="error-message" style="display: none;"></div>
+
+    <div id="login-form">
+        <h2>Login</h2>
+        <label for="base-url">Base URL:</label>
+        <input type="text" id="base-url" name="base-url">
+        <label for="ticket-name">Ticket Name:</label>
+        <input type="text" id="ticket-name" name="ticket-name">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="constraints-section" style="display: none;">
+        <h2>Constraints</h2>
+        <div class="button-banner">
+            <button onclick="showUploadModal()">Upload Excel</button>
+            <button onclick="downloadExcel()">Download Excel</button>
+        </div>
+        <table border="1" id="constraints-table">
+            <thead>
+                <tr>
+                    <th>Constraint</th>
+                    <th>Assembly Name</th>
+                    <th>Rule Group</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Constraints data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="spinner"></div>
+
+    <!-- The Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUploadModal()">&times;</span>
+            <h2>Upload Excel</h2>
+            <input type="file" id="file-upload" accept=".xlsx">
+            <button onclick="uploadExcel()">Upload</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
