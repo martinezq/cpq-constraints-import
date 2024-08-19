@@ -71,18 +71,28 @@ async function fetchConstraints() {
         const tbody = document.querySelector('#constraints-table tbody');
         tbody.innerHTML = '';
 
-        let rows = '';
+        const fragment = document.createDocumentFragment();
 
         constraints.forEach(item => {
-            rows += `<tr>
-                        <td>${item.constraint}</td>
-                        <td>${item.assembly.name}</td>
-                        <td>${item.ruleGroup}</td>
-                    </tr>`;
+            const row = document.createElement('tr');
+        
+            const constraintCell = document.createElement('td');
+            constraintCell.textContent = item.constraint;
+            row.appendChild(constraintCell);
+        
+            const assemblyCell = document.createElement('td');
+            assemblyCell.textContent = item.assembly.name;
+            row.appendChild(assemblyCell);
+        
+            const ruleGroupCell = document.createElement('td');
+            ruleGroupCell.textContent = item.ruleGroup;
+            row.appendChild(ruleGroupCell);
+        
+            fragment.appendChild(row);
         });
         
-        tbody.innerHTML = rows;
-        
+        tbody.appendChild(fragment);
+
     } catch (error) {
         console.error('Error fetching constraints:', error);
         displayError('Failed to fetch constraints. ' + error.message);
