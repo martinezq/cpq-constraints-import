@@ -4,7 +4,7 @@ let username = '';
 let password = '';
 let selectedFile = null;
 
-const backendGraphQlUrl = `https://cpq-graphql-server.herokuapp.com/promo`;
+const backendGraphQlUrl = `https://tacton-cpq-graphql-server-d64a27e6fba8.herokuapp.com/promo`;
 // const backendGraphQlUrl = `http://localhost:4000/promo`;
 
 document.addEventListener('DOMContentLoaded', () => {
